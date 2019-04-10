@@ -135,10 +135,13 @@
     },
     onInit() {
       // 初始化tabItemList
+      console.error("Object.keys(this.dataMap): ",Object.keys(this.dataMap))
       this.tabItemList = [].concat(Object.keys(this.dataMap))
+      console.error("this.tabItemList",this.tabItemList)
       this.tabItemList.forEach(tabItem => {
         this.$set(`selectedIdxMap.${tabItem}`, -1)
       })
+      console.error("this.selectedIdxMap",this.selectedIdxMap)
     },
     selectConFn (tabItem, index) {
       this.selectedIdxMap[tabItem] = this.selectedIdxMap[tabItem] === index ? -1 : index
