@@ -114,7 +114,7 @@
       <!-- input组件支持动态切换type类型 -->
       <div class="input-item">
         <text class="input-hint">点击改变InputType按钮，可将下面输入框的InputType切换为password形式</text>
-        <input class="input-text" type="{{inputType}}" value="123456" /></input>
+        <input class="input-text" type="{{inputType}}" value="0" onChange="onTabIdChange"/></input>
         <div class="doc-row" style="margin-top: 30px;">
           <input class="input-button color-1" type="button" value="改变InputType" onclick="changeInputType" /></input>
         </div>
@@ -193,22 +193,31 @@
 
   <script>
     import prompt from '@system.prompt'
-
+    import router from '@system.router'
     export default {
       private: {
         componentName: 'input',
         inputValue: '',
-        inputType: 'text'
+        inputType: 'text',
+        cid:"0",
       },
       onInit () {
         this.$page.setTitleBar({text: 'Input'})
       },
       changeInputType () {
-        if (this.inputType === 'text') {
-          this.inputType = 'password'
-        } else {
-          this.inputType = 'text'
-        }
+        // if (this.inputType === 'text') {
+        //   this.inputType = 'password'
+        // } else {
+        //   this.inputType = 'text'
+        // }
+
+        router.push({
+          uri: 'hap://app/com.douyu.quickapp/Main',
+          params: {
+            curPage: "1",
+            cateTab: this.cid,
+          }
+        });
       },
       updateValue (e) {
         this.inputValue = e.text
@@ -226,6 +235,9 @@
           + (e.checked === undefined ? '' : '---checked: ' + e.checked)
           + (e.text === undefined ? '' : '---text: ' + e.text)
         })
+      },
+      onTabIdChange(e){
+        this.cid = e.text;
       },
       showClickPrompt (msg) {
         prompt.showToast({
